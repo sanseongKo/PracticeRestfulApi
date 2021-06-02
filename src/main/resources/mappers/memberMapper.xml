@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.test.board.mappers.memberMapper">
+
+	<!-- 멤버 쿼리 -->
+
+	<!-- 회원가입 -->
+	<insert id="insertMember" parameterType="memberVO">
+		insert into "MEMBER" ("UID", "NAME", "PASSWORD", "EMAIL", "VERIFICATION", "NICKNAME", "REGDATE")
+		values (UID_SEQ.nextval, #{name}, #{password}, #{email}, 1, #{nickname}, sysdate)
+	</insert>
+	
+	<select id="checkPwd" parameterType="memberVO" resultType="memberVO">
+		select "PASSWORD" from "MEMBER" where "EMAIL" = #{email}
+	</select>
+
+	<!-- 회원 정보 수정 -->
+	<update id="updateMember" parameterType="memberVO">
+		update "MEMBER" set "EMAIL" = #{email}, "ADDRESS" = #{address}, "NICKNAME" = #{nickname}
+		where UID = #{uid} and PASSWORD = #{password} and "NAME" = #{name}
+	</update>
+	
+	<!-- 판매자 권한 부여 -->
+	<update id="verification">
+		update "MEMBER" set "VERIFICATION" = #{verification} 
+		where UID = #{uid}
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<delete id="delete">
+		delete from "MEMBER" where "UID" = #{uid}
+	</delete>
+	
+	
+	<!-- 주소 쿼리 -->
+	
+	<!-- 회원가입 시 주소 입력 -->
+	
+	<!-- 판매자 오프라인 매장&구매자 배송지 주소 -->
+	
+	
+	<resultMap id="MemberResultMap" type="MemberVO">
+		<id property="uid" column="uid" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="verification" column="verification" />
+		<result property="nicname" column="nicname" />
+		<result property="regdate" column="regdate" />
+	</resultMap>
+
+</mapper>
